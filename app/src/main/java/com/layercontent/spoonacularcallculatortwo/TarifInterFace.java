@@ -26,7 +26,7 @@ public interface TarifInterFace {
     @FormUrlEncoded
     Call<TarifBilgi>GetTarifBilgi(@Field("apiKey")String key, @Field("includeNutrition")Boolean TfBoolen);
 @POST(TarifID+"/similar")
-@FormUrlEncoded
+@FormUrlEncoded//
     Call<BenzerTarifler>GetBenzerTarif(@Field("apiKey")String key);
 
 @GET("random")
