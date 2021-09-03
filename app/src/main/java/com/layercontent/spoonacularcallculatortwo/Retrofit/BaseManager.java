@@ -8,5 +8,8 @@ public class BaseManager {
         RestApiClient restApiClient=new RestApiClient(BaseUrl.BASE_URL);
         return restApiClient.getmRestApi();
     }
-
+    protected TarifInterFace GetTarifBENZER(){
+        RestApiClient restApiClient=new RestApiClient(BaseUrl.BASE_URLBENZER);
+        return restApiClient.getmRestApi();
+    }
 }

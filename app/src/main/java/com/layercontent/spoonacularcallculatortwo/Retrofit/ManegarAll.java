@@ -2,6 +2,7 @@ package com.layercontent.spoonacularcallculatortwo.Retrofit;
 
 
 
+import com.layercontent.spoonacularcallculatortwo.search.benzertarifler.BenzerTarifler;
 import com.layercontent.spoonacularcallculatortwo.search.rastgeletarif.RastgeleTarif;
 
 import retrofit2.Call;
@@ -11,6 +12,7 @@ public class ManegarAll extends BaseManager {
     public static synchronized ManegarAll getInstance(){
         return ourınstance;
     }
+
     public Call<RastgeleTarif> getirRandomTarif(String api){
 
         //apiutilsa gidiyor
@@ -18,12 +20,11 @@ public class ManegarAll extends BaseManager {
         //ondan sonra getirbilgiler sınıfını bilgilerin görüneceği yerde çağırıyoruz
         return GetTarif().GetRastgeleTarif(api);
     }
-  /*  public Call<List<SehirCevap>> getirsehirleri(){
-        Call<List<SehirCevap>>call= getsehir().Sehirler();
+    public Call<BenzerTarifler> GetbenzerTarif(String api){
 
         //apiutilsa gidiyor
         //oradan getuserinter clasını çağırıyor oradan da interface den bilgiler clasını çağırıyor,
         //ondan sonra getirbilgiler sınıfını bilgilerin görüneceği yerde çağırıyoruz
-        return call;
-    }*/
+        return GetTarifBENZER().GetBenzerTarif(api);
+    }
 }
