@@ -1,8 +1,7 @@
 package com.layercontent.spoonacularcallculatortwo;
 
 
-
-
+import com.layercontent.spoonacularcallculatortwo.search.Otomatiktanimlama;
 import com.layercontent.spoonacularcallculatortwo.search.Search;
 import com.layercontent.spoonacularcallculatortwo.search.Tarifbilgi.TarifBilgi;
 import com.layercontent.spoonacularcallculatortwo.search.benzertarifler.BenzerTarifler;
@@ -21,19 +20,20 @@ import retrofit2.http.Query;
 
 public interface TarifInterFace {
 
+    @GET("autocomplete")
+    Call<List<Otomatiktanimlama>> GetoutoSearch(@Query("apiKey") String key,@Query("query") String araTarif) ;
 
-    @POST("complexSearch")
-    @FormUrlEncoded
-    Call<Search>searchResult(@Field("apiKey")String key, @Field("query")String araTarif);
+    @GET("complexSearch")
+    Call<Search> GetComplexSearch(@Query("query") String araTarif,@Query("apiKey") String key) ;
 
-    @POST()
-    @FormUrlEncoded
-    Call<TarifBilgi>GetTarifBilgi(@Field("apiKey")String key, @Field("includeNutrition")Boolean TfBoolen);
+    @GET("{TarifID}/information")
+    Call<TarifBilgi> GetTarifBilgi(@Path(value = "TarifID", encoded = true)String TarifID, @Query("apiKey") String key);
 
     @GET("{TarifID}/similar")
-    Call<List<BenzerTarifler>>GetBenzerTarif(@Path(value="TarifID",encoded=true) String TarifID ,@Query("apiKey") String key );
-@GET("random")
-Call<RastgeleTarif> GetRastgeleTarif(@Query("apiKey") String key);
+    Call<List<BenzerTarifler>> GetBenzerTarif(@Path(value = "TarifID", encoded = true) String TarifID, @Query("apiKey") String key);
+
+    @GET("random")
+    Call<RastgeleTarif> GetRastgeleTarif(@Query("apiKey") String key);
 
 }
 
