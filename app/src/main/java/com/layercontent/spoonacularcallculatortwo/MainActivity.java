@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        idrandom = findViewById(R.id.idrandom);
+
         GetRandomRecipe();
-        button = findViewById(R.id.randomstart);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,13 +50,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GetRandomRecipe() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
         Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey);
         tarifCall.enqueue(new Callback<RastgeleTarif>() {
             @Override
             public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
                 if (response.isSuccessful()) {
                     Log.e("random", response.body().getRecipes().get(0).getSourceName());
-                    Log.e("random", response.body().getRecipes().get(0).getExtendedIngredients().get(1).getId().toString());
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
                     TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
 //                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
                     new android.os.Handler().postDelayed(new Runnable() {
