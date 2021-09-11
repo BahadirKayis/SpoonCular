@@ -1,15 +1,15 @@
 package com.layercontent.spoonacularcallculatortwo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.layercontent.spoonacularcallculatortwo.Retrofit.BaseUrl;
+import com.layercontent.spoonacularcallculatortwo.Model.RastgeleTarifAdapter;
 import com.layercontent.spoonacularcallculatortwo.Retrofit.ManegarAll;
 import com.layercontent.spoonacularcallculatortwo.search.Otomatiktanimlama;
 import com.layercontent.spoonacularcallculatortwo.search.Search;
@@ -17,9 +17,9 @@ import com.layercontent.spoonacularcallculatortwo.search.Tarifbilgi.TarifBilgi;
 import com.layercontent.spoonacularcallculatortwo.search.benzertarifler.BenzerTarifler;
 import com.layercontent.spoonacularcallculatortwo.search.rastgeletarif.RastgeleTarif;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,23 +30,20 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     private int TID;
     private Handler myHandler;
+private List<RastgeleTarif>rastgeleTarifList=new ArrayList<>();
+    RecyclerView recyclerView;
+    RastgeleTarifAdapter rastgeleTarifAdapter;
     private String apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+recyclerView=findViewById(R.id.randomRecyler);
+recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         GetRandomRecipe();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.e("xxx", BaseUrl.BASE_URLBENZER.toString());
-            }
-        });
     }
 
     public void GetRandomRecipe() {
@@ -55,14 +52,18 @@ public class MainActivity extends AppCompatActivity {
         //getinstructions ile de talimatları alıyoruz
         //getimage ile de resmini
         //getreadyminutes dakikasını
-        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey);
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey,String.valueOf(3));
         tarifCall.enqueue(new Callback<RastgeleTarif>() {
             @Override
             public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
                 if (response.isSuccessful()) {
-                    Log.e("random", response.body().getRecipes().get(0).getSourceName());
-                    Log.e("random", response.body().getRecipes().get(0).getTitle());
-                    TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+                    List list=new ArrayList();
+                    list.add( response.body());
+                   rastgeleTarifAdapter=new RastgeleTarifAdapter(list,MainActivity.this);
+                   recyclerView.setAdapter(rastgeleTarifAdapter);
+                //  Log.e("random", response.body().getRecipes().get(0).getSourceName());
+                    //Log.e("random", response.body().getRecipes().get(0).getTitle());
+                   // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
 //                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
                     new android.os.Handler().postDelayed(new Runnable() {
                         @Override
@@ -70,10 +71,12 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     }, 5000);
-                    GetBenzerRecipe(String.valueOf(TID));
-                    GetTarifInfo(String.valueOf(TID));
-                    GetSearchComplex("pasta");
-                    GetoutoSearch("ta");
+
+                 //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                  //  GetSearchComplex("pasta");
+                   // GetoutoSearch("ta");
+
 
                 } else {
                     Log.e("randomhata", "girmedi");

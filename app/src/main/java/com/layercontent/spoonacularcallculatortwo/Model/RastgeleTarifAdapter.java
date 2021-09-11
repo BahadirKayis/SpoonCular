@@ -10,15 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.layercontent.spoonacularcallculatortwo.MainActivity;
 import com.layercontent.spoonacularcallculatortwo.R;
 import com.layercontent.spoonacularcallculatortwo.search.rastgeletarif.RastgeleTarif;
+import com.layercontent.spoonacularcallculatortwo.search.rastgeletarif.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collection;
 import java.util.List;
 
 public class RastgeleTarifAdapter extends RecyclerView.Adapter<RastgeleTarifAdapter.tariflerigetir>{
 
-    List<RastgeleTarif>rastgeleTarifList;
+        List<RastgeleTarif> rastgeleTarifList;
     Context context;
 
     public RastgeleTarifAdapter(List<RastgeleTarif> rastgeleTarifList, Context context) {
@@ -29,7 +32,7 @@ public class RastgeleTarifAdapter extends RecyclerView.Adapter<RastgeleTarifAdap
     @NonNull
     @Override
     public tariflerigetir onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.support_simple_spinner_dropdown_item,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.randomtarifler,parent,false);
         return new tariflerigetir(view);
     }
 

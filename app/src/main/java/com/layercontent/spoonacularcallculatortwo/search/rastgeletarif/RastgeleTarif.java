@@ -9,7 +9,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 @Generated("jsonschema2pojo")
-public class RastgeleTarif {
+public class RastgeleTarif  {
 
     @SerializedName("recipes")
     @Expose
