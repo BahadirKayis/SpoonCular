@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.layercontent.spoonacularcallculatortwo.Model.RastgeleTarifAdapter;
 import com.layercontent.spoonacularcallculatortwo.Retrofit.ManegarAll;
 import com.layercontent.spoonacularcallculatortwo.search.Otomatiktanimlama;
+import com.layercontent.spoonacularcallculatortwo.search.Recipe;
 import com.layercontent.spoonacularcallculatortwo.search.Search;
 import com.layercontent.spoonacularcallculatortwo.search.Tarifbilgi.TarifBilgi;
 import com.layercontent.spoonacularcallculatortwo.search.benzertarifler.BenzerTarifler;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     private int TID;
     private Handler myHandler;
-private List<RastgeleTarif>rastgeleTarifList=new ArrayList<>();
+
     RecyclerView recyclerView;
     RastgeleTarifAdapter rastgeleTarifAdapter;
     private String apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
@@ -52,17 +53,20 @@ recyclerView.setHasFixedSize(true);
         //getinstructions ile de talimatları alıyoruz
         //getimage ile de resmini
         //getreadyminutes dakikasını
-        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey,String.valueOf(3));
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey,String.valueOf(50));
         tarifCall.enqueue(new Callback<RastgeleTarif>() {
             @Override
             public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
                 if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
                     List list=new ArrayList();
-                    list.add( response.body());
+                    list.addAll( response.body().getRecipes());
                    rastgeleTarifAdapter=new RastgeleTarifAdapter(list,MainActivity.this);
                    recyclerView.setAdapter(rastgeleTarifAdapter);
-                //  Log.e("random", response.body().getRecipes().get(0).getSourceName());
-                    //Log.e("random", response.body().getRecipes().get(0).getTitle());
+                 Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
 //                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
                     new android.os.Handler().postDelayed(new Runnable() {
