@@ -18,8 +18,8 @@ public class ManegarAll extends BaseManager {
         return ourınstance;
     }
 
-    public Call<RastgeleTarif> getirRandomTarif(String api, String number) {
-Call<RastgeleTarif> call =GetTarif().GetRastgeleTarif(api,number);
+    public Call<RastgeleTarif> getirRandomTarif(String api, String number,String tags) {
+Call<RastgeleTarif> call =GetTarif().GetRastgeleTarif(api,number,tags);
         //apiutilsa gidiyor
         //oradan getuserinter clasını çağırıyor oradan da interface den bilgiler clasını çağırıyor,
         //ondan sonra getirbilgiler sınıfını bilgilerin görüneceği yerde çağırıyoruz

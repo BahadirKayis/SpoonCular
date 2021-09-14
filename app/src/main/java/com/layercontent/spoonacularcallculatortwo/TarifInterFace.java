@@ -33,7 +33,7 @@ public interface TarifInterFace {
     Call<List<BenzerTarifler>> GetBenzerTarif(@Path(value = "TarifID", encoded = true) String TarifID, @Query("apiKey") String key);
 
     @GET("random")
-    Call<RastgeleTarif> GetRastgeleTarif(@Query("apiKey") String key,@Query("number")String number);
+    Call<RastgeleTarif> GetRastgeleTarif(@Query("apiKey") String key,@Query("number")String number,@Query("tags")String tags);
 
 }
 

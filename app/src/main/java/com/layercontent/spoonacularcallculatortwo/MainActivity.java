@@ -1,6 +1,7 @@
 package com.layercontent.spoonacularcallculatortwo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,43 +32,74 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     private int TID;
     private Handler myHandler;
-
-    RecyclerView recyclerView;
+//breakfast
+    RecyclerView Recylermain, Recylersalad, Recylerdessert,Recylerbeverage,Recylerappetizer,Recylerbreakfast,Recylerbreakfast2;
     RastgeleTarifAdapter rastgeleTarifAdapter;
-    private String apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
+    private final String  apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-recyclerView=findViewById(R.id.randomRecyler);
-recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        GetRandomRecipe();
+        Recylermain = findViewById(R.id.Recylermain);
+        Recylerdessert = findViewById(R.id.Recylerdessert);
+        Recylersalad = findViewById(R.id.Recylersalad);
+        Recylerbeverage = findViewById(R.id.Recylerbeverage);
+        Recylerappetizer = findViewById(R.id.Recylerappetizer);
+        Recylerbreakfast = findViewById(R.id.Recylerbreakfast);
+        Recylerbreakfast2 = findViewById(R.id.Recylerbreakfast2);
 
+        Recylermain.setHasFixedSize(true);
+        Recylermain.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Recylerdessert.setHasFixedSize(true);
+        Recylerdessert.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Recylersalad.setHasFixedSize(true);
+        Recylersalad.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Recylerbeverage.setHasFixedSize(true);
+        Recylerbeverage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Recylerappetizer.setHasFixedSize(true);
+        Recylerappetizer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Recylerbreakfast.setHasFixedSize(true);
+        Recylerbreakfast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Recylerbreakfast2.setHasFixedSize(true);
+        Recylerbreakfast2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        GetRandomRecipesoup();
+        GetRandomRecipedessert();
+        GetRandomRecipesalad();
+        GetRandomRecipebeverage();
+        GetRandomRecipeappetizer();
+        GetRandomRecipebreakfast();
+        GetRandomRecipebreakfast2();
     }
 
-    public void GetRandomRecipe() {
+    public void GetRandomRecipesoup() {
         //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
         //getanalyzedInstructions ile de malzemelerini alıyoruz
         //getinstructions ile de talimatları alıyoruz
         //getimage ile de resmini
         //getreadyminutes dakikasını
-        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey,String.valueOf(50));
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "soup");
         tarifCall.enqueue(new Callback<RastgeleTarif>() {
             @Override
             public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
                 if (response.isSuccessful()) {
                     //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
                     //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
-                    List list=new ArrayList();
-                    list.addAll( response.body().getRecipes());
-                   rastgeleTarifAdapter=new RastgeleTarifAdapter(list,MainActivity.this);
-                   recyclerView.setAdapter(rastgeleTarifAdapter);
-                 Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylermain.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
                     Log.e("random", response.body().getRecipes().get(1).getTitle());
                     Log.e("random", response.body().getRecipes().get(2).getTitle());
-                   // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
 //                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
                     new android.os.Handler().postDelayed(new Runnable() {
                         @Override
@@ -76,10 +108,302 @@ recyclerView.setHasFixedSize(true);
                         }
                     }, 5000);
 
-                 //   GetBenzerRecipe(String.valueOf(TID));
+                    //   GetBenzerRecipe(String.valueOf(TID));
                     //GetTarifInfo(String.valueOf(TID));
-                  //  GetSearchComplex("pasta");
-                   // GetoutoSearch("ta");
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
+
+
+                } else {
+                    Log.e("randomhata", "girmedi");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RastgeleTarif> call, Throwable t) {
+                Log.e("randomhata", t.getMessage());
+
+            }
+        });
+    }
+
+    public void GetRandomRecipedessert() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "dessert");
+        tarifCall.enqueue(new Callback<RastgeleTarif>() {
+            @Override
+            public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
+                if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylerdessert.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+//                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    }, 5000);
+
+                    //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
+
+
+                } else {
+                    Log.e("randomhata", "girmedi");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RastgeleTarif> call, Throwable t) {
+                Log.e("randomhata", t.getMessage());
+
+            }
+        });
+    }
+
+    public void GetRandomRecipesalad() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "salad");
+        tarifCall.enqueue(new Callback<RastgeleTarif>() {
+            @Override
+            public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
+                if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylersalad.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+//                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    }, 5000);
+
+                    //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
+
+
+                } else {
+                    Log.e("randomhata", "girmedi");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RastgeleTarif> call, Throwable t) {
+                Log.e("randomhata", t.getMessage());
+
+            }
+        });
+    }
+    public void GetRandomRecipebeverage() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "beverage");
+        tarifCall.enqueue(new Callback<RastgeleTarif>() {
+            @Override
+            public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
+                if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylerbeverage.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+//                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    }, 5000);
+
+                    //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
+
+
+                } else {
+                    Log.e("randomhata", "girmedi");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RastgeleTarif> call, Throwable t) {
+                Log.e("randomhata", t.getMessage());
+
+            }
+        });
+    }
+
+    public void GetRandomRecipeappetizer() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "appetizer");
+        tarifCall.enqueue(new Callback<RastgeleTarif>() {
+            @Override
+            public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
+                if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylerappetizer.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+//                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    }, 5000);
+
+                    //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
+
+
+                } else {
+                    Log.e("randomhata", "girmedi");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RastgeleTarif> call, Throwable t) {
+                Log.e("randomhata", t.getMessage());
+
+            }
+        });
+    }
+
+    public void GetRandomRecipebreakfast() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "breakfast");
+        tarifCall.enqueue(new Callback<RastgeleTarif>() {
+            @Override
+            public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
+                if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylerbreakfast.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+//                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    }, 5000);
+
+                    //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
+
+
+                } else {
+                    Log.e("randomhata", "girmedi");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RastgeleTarif> call, Throwable t) {
+                Log.e("randomhata", t.getMessage());
+
+            }
+        });
+    }
+    public void GetRandomRecipebreakfast2() {
+        //response.body().getRecipes().get(0).getTitle() böyle direkt yemeğin adını alıyoruz
+        //getanalyzedInstructions ile de malzemelerini alıyoruz
+        //getinstructions ile de talimatları alıyoruz
+        //getimage ile de resmini
+        //getreadyminutes dakikasını
+        Call<RastgeleTarif> tarifCall = ManegarAll.getInstance().getirRandomTarif(apiKey, String.valueOf(10), "breakfast");
+        tarifCall.enqueue(new Callback<RastgeleTarif>() {
+            @Override
+            public void onResponse(Call<RastgeleTarif> call, Response<RastgeleTarif> response) {
+                if (response.isSuccessful()) {
+                    //RastgeleTarifin içinde tek birşey olduğu için recipi gönderiyorum adapterden de List<Recipe> olarak alıyorum
+                    //yoksa hata alıyorum,list.addAll( response.body().getRecipes()); olarak yapıyorum yoksa hata çıkıyor ve çalışmıyor
+                    List list = new ArrayList();
+                    list.addAll(response.body().getRecipes());
+                    rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
+                    Recylerbreakfast2.setAdapter(rastgeleTarifAdapter);
+                    Log.e("random", response.body().getRecipes().get(0).getTitle());
+                    Log.e("random", response.body().getRecipes().get(1).getTitle());
+                    Log.e("random", response.body().getRecipes().get(2).getTitle());
+                    // TID = response.body().getRecipes().get(0).getExtendedIngredients().get(0).getId();
+//                    Log.e("xxx", BaseUrl.BASE_URLBENZER);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    }, 5000);
+
+                    //   GetBenzerRecipe(String.valueOf(TID));
+                    //GetTarifInfo(String.valueOf(TID));
+                    //  GetSearchComplex("pasta");
+                    // GetoutoSearch("ta");
 
 
                 } else {
@@ -150,14 +474,14 @@ recyclerView.setHasFixedSize(true);
         });
     }
 
-    public void GetoutoSearch(String harf){
-        Call<List<Otomatiktanimlama>>call=ManegarAll.getInstance().GetoutoSearch(apiKey,harf);
+    public void GetoutoSearch(String harf) {
+        Call<List<Otomatiktanimlama>> call = ManegarAll.getInstance().GetoutoSearch(apiKey, harf);
         call.enqueue(new Callback<List<Otomatiktanimlama>>() {
             @Override
             public void onResponse(Call<List<Otomatiktanimlama>> call, Response<List<Otomatiktanimlama>> response) {
-           if (response.isSuccessful()){
-               Log.e("GetoutoSearch", response.body().get(0).getTitle());
-           }
+                if (response.isSuccessful()) {
+                    Log.e("GetoutoSearch", response.body().get(0).getTitle());
+                }
 
             }
 
