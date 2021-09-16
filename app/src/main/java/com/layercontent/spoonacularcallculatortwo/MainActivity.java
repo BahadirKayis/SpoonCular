@@ -1,19 +1,16 @@
 package com.layercontent.spoonacularcallculatortwo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
+
 
 import com.layercontent.spoonacularcallculatortwo.Model.RastgeleTarifAdapter;
 import com.layercontent.spoonacularcallculatortwo.Retrofit.ManegarAll;
 import com.layercontent.spoonacularcallculatortwo.search.Otomatiktanimlama;
-import com.layercontent.spoonacularcallculatortwo.search.Recipe;
 import com.layercontent.spoonacularcallculatortwo.search.Search;
 import com.layercontent.spoonacularcallculatortwo.search.Tarifbilgi.TarifBilgi;
 import com.layercontent.spoonacularcallculatortwo.search.benzertarifler.BenzerTarifler;
@@ -21,17 +18,13 @@ import com.layercontent.spoonacularcallculatortwo.search.rastgeletarif.RastgeleT
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    TextView idrandom;
-    Button button;
-    private int TID;
-    private Handler myHandler;
 //breakfast
     RecyclerView Recylermain, Recylersalad, Recylerdessert,Recylerbeverage,Recylerappetizer,Recylerbreakfast,Recylerbreakfast2;
     RastgeleTarifAdapter rastgeleTarifAdapter;
@@ -71,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
         Recylerbreakfast2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         GetRandomRecipesoup();
-        GetRandomRecipedessert();
-        GetRandomRecipesalad();
+      GetRandomRecipedessert();
+      GetRandomRecipesalad();
         GetRandomRecipebeverage();
         GetRandomRecipeappetizer();
         GetRandomRecipebreakfast();
-        GetRandomRecipebreakfast2();
+       GetRandomRecipebreakfast2();
     }
 
     public void GetRandomRecipesoup() {
@@ -108,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 5000);
 
-                    //   GetBenzerRecipe(String.valueOf(TID));
-                    //GetTarifInfo(String.valueOf(TID));
-                    //  GetSearchComplex("pasta");
+                     //GetBenzerRecipe(String.valueOf(TID));
+                     //GetTarifInfo(String.valueOf(TID));
+                    // GetSearchComplex("pasta");
                     // GetoutoSearch("ta");
 
 

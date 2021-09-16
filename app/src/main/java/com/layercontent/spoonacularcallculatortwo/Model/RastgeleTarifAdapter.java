@@ -2,6 +2,7 @@ package com.layercontent.spoonacularcallculatortwo.Model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +44,13 @@ public class RastgeleTarifAdapter extends RecyclerView.Adapter<RastgeleTarifAdap
     public void onBindViewHolder(@NonNull RastgeleTarifAdapter.tariflerigetir holder, int position) {
         holder.randomTitle.setText(rastgeleTarifList.get(position).getTitle());
         Picasso.get().load(rastgeleTarifList.get(position).getImage()).into(holder.randomresim);
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+       // Log.e("xxxx", rastgeleTarifList.get(position).getId().toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(context,Detalistactivity.class);
-                i.putExtra(rastgeleTarifList.get(position).getId().toString(),"randomtarifid");
+                Log.e("xxxx", rastgeleTarifList.get(position).getId().toString());
+                i.putExtra("randomtarifid",rastgeleTarifList.get(position).getId().toString());
                 context.startActivity(i);
             }
         });
