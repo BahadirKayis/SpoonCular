@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 //breakfast
-    RecyclerView Recylermain, Recylersalad, Recylerdessert,Recylerbeverage,Recylerappetizer,Recylerbreakfast,Recylerbreakfast2;
+    RecyclerView Recylermain, Recylersalad, Recylerdessert,Recylerbeverage,Recylerappetizer,Recylerbreakfast;
     RastgeleTarifAdapter rastgeleTarifAdapter;
     private final String  apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Recylerbeverage = findViewById(R.id.Recylerbeverage);
         Recylerappetizer = findViewById(R.id.Recylerappetizer);
         Recylerbreakfast = findViewById(R.id.Recylerbreakfast);
-        Recylerbreakfast2 = findViewById(R.id.Recylerbreakfast2);
+
 
         Recylermain.setHasFixedSize(true);
         Recylermain.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         Recylerbreakfast.setHasFixedSize(true);
         Recylerbreakfast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        Recylerbreakfast2.setHasFixedSize(true);
-        Recylerbreakfast2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         GetRandomRecipesoup();
       GetRandomRecipedessert();
@@ -380,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                     List list = new ArrayList();
                     list.addAll(response.body().getRecipes());
                     rastgeleTarifAdapter = new RastgeleTarifAdapter(list, MainActivity.this);
-                    Recylerbreakfast2.setAdapter(rastgeleTarifAdapter);
+
                     Log.e("random", response.body().getRecipes().get(0).getTitle());
                     Log.e("random", response.body().getRecipes().get(1).getTitle());
                     Log.e("random", response.body().getRecipes().get(2).getTitle());
