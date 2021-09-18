@@ -2,6 +2,8 @@ package com.layercontent.spoonacularcallculatortwo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
@@ -18,45 +20,49 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Detalistactivity extends AppCompatActivity {
-CheckBox checkvegetarian,checkvegan,checkgluten,checkdairy;
+    CheckBox checkvegetarian, checkvegan, checkgluten, checkdairy;
 
     ImageView imageViewanaresim;
-    TextView tarifinadi,textdishtypes,textscore,textlikes,texthealtscore,textView12;
+    TextView tarifinadi, textdishtypes, textscore, textlikes, texthealtscore, textView12;
     boolean isboolen;
     LinearLayout linearmaddeler;
-    private final String  apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
+    TextView textView;
+    private final String apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalistactivity);
-checkvegetarian=findViewById(R.id.vegetarian);
-        checkdairy=findViewById(R.id.dairyfree);
-        checkgluten=findViewById(R.id.glutenfree);
-        checkvegan=findViewById(R.id.vegan);
-        textdishtypes=findViewById(R.id.dishtypes);
+        checkvegetarian = findViewById(R.id.vegetarian);
+        checkdairy = findViewById(R.id.dairyfree);
+        checkgluten = findViewById(R.id.glutenfree);
+        checkvegan = findViewById(R.id.vegan);
+        textdishtypes = findViewById(R.id.dishtypes);
 
-        tarifinadi=findViewById(R.id.textView11);
-        textscore=findViewById(R.id.Score);
-        textlikes=findViewById(R.id.Likes);
-        texthealtscore=findViewById(R.id.healtscore);
-        imageViewanaresim=findViewById(R.id.imageAnaresim);
-        textView12=findViewById(R.id.textView12);
-       GetTarifInfo((getIntent().getStringExtra("randomtarifid")));
+        tarifinadi = findViewById(R.id.textView11);
+        textscore = findViewById(R.id.Score);
+        textlikes = findViewById(R.id.Likes);
+        texthealtscore = findViewById(R.id.healtscore);
+        imageViewanaresim = findViewById(R.id.imageAnaresim);
+        textView12 = findViewById(R.id.textView12);
+        GetTarifInfo((getIntent().getStringExtra("randomtarifid")));
 
-       linearmaddeler=findViewById(R.id.linearmaddeler);
+        linearmaddeler = findViewById(R.id.linearmaddeler);
 
-
+        textView = new TextView(this);
     }
+
     public void GetTarifInfo(String TarifID) {
         Call<TarifBilgi> call = ManegarAll.getInstance().GetTarifBilgisi(TarifID, apiKey);
         call.enqueue(new Callback<TarifBilgi>() {
+
             @Override
             public void onResponse(Call<TarifBilgi> call, Response<TarifBilgi> response) {
                 if (response.isSuccessful()) {
-                 Picasso.get().load(response.body().getImage()).into(imageViewanaresim);
+                    Picasso.get().load(response.body().getImage()).into(imageViewanaresim);
                     tarifinadi.setText(response.body().getTitle());
-                    isboolen=response.body().getVegetarian();
-                  checkvegetarian.setChecked(response.body().getVegetarian());
+                    isboolen = response.body().getVegetarian();
+                    checkvegetarian.setChecked(response.body().getVegetarian());
                     checkdairy.setChecked(response.body().getDairyFree());
                     checkgluten.setChecked(response.body().getGlutenFree());
                     checkvegan.setChecked(response.body().getVegan());
@@ -66,6 +72,18 @@ checkvegetarian=findViewById(R.id.vegetarian);
                     textlikes.setText(response.body().getAggregateLikes().toString());
                     texthealtscore.setText(response.body().getHealthScore().toString());
                     textView12.setText(response.body().getSummary());
+
+                  //  LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                    for (int i = 0; i < response.body().getExtendedIngredients().size();i++) {
+                        textView = new TextView(Detalistactivity.this);
+                        //textView.setId(response.body().getExtendedIngredients().get(i).getId());
+                        textView.setTextColor(Color.parseColor("#FF000000"));
+
+                          textView.setText(response.body().getExtendedIngredients().get(i).getOriginal());
+                        linearmaddeler.addView(textView);
+                       // linearmaddeler.removeView(textView);
+                    }
 
                 }
             }

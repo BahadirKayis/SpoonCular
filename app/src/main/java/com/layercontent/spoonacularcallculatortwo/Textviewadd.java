@@ -7,20 +7,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.layercontent.spoonacularcallculatortwo.search.Tarifbilgi.ExtendedIngredient;
+
 import org.jetbrains.annotations.NotNull;
 
-public class Textviewadd extends  androidx.appcompat.widget.AppCompatTextView {
+import java.util.List;
 
-    public Textviewadd(@NonNull @NotNull Context context) {
+public class Textviewadd extends androidx.appcompat.widget.AppCompatTextView{
+    List<ExtendedIngredient>liste;
+
+    public Textviewadd(@NonNull @NotNull Context context, List<ExtendedIngredient> liste) {
         super(context);
+        this.liste = liste;
     }
 
-    public Textviewadd(@NonNull @NotNull Context context, @Nullable @org.jetbrains.annotations.Nullable AttributeSet attrs) {
 
-        super(context, attrs);
     }
-
-    public Textviewadd(@NonNull @NotNull Context context, @Nullable @org.jetbrains.annotations.Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-}
