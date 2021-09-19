@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 //breakfast
     RecyclerView Recylermain, Recylersalad, Recylerdessert,Recylerbeverage,Recylerappetizer,Recylerbreakfast;
     RastgeleTarifAdapter rastgeleTarifAdapter;
-    private final String  apiKey = "2f7c6f4d8ea7431785f543a865bdf46c";
+    private final String  apiKey = "a30512c1612c4422a8ce81571ed5bbde";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
