@@ -1,11 +1,14 @@
 package com.layercontent.spoonacularcallculatortwo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -38,7 +41,7 @@ public class Detalistactivity extends AppCompatActivity {
 
     List<Integer> benserresimler=new ArrayList<>();
     List<TarifBilgi> resimler2=new ArrayList<>();
-
+Handler handler=new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,9 +154,14 @@ public void GetTarifInfobenzer(String TarifID){
 
                     }
 
-                       Log.e("xxx", String.valueOf(resimler2.size()));
-                        BenzerTarifAdapter benzerTarifAdapter=new BenzerTarifAdapter(response.body(),Detalistactivity.this,resimler2);
-                        benzerRecy.setAdapter(benzerTarifAdapter);
+
+                      handler.postDelayed(new Runnable() {
+                          @Override
+                          public void run() {
+                              BenzerTarifAdapter benzerTarifAdapter=new BenzerTarifAdapter(response.body(),Detalistactivity.this,resimler2);
+                              benzerRecy.setAdapter(benzerTarifAdapter);
+                          }
+                      },3000);
 
 
 

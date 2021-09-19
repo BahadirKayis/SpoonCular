@@ -62,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         GetRandomRecipesoup();
-    //  GetRandomRecipedessert();
-    //  GetRandomRecipesalad();
-       // GetRandomRecipebeverage();
-      //  GetRandomRecipeappetizer();
-       // GetRandomRecipebreakfast();
-      // GetRandomRecipebreakfast2();
+      GetRandomRecipedessert();
+      GetRandomRecipesalad();
+        GetRandomRecipebeverage();
+       GetRandomRecipeappetizer();
+       GetRandomRecipebreakfast();
+       GetRandomRecipebreakfast2();
     }
 
     public void GetRandomRecipesoup() {
